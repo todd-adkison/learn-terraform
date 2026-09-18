@@ -27,9 +27,10 @@ provider "azurerm" {
 locals {
   caf_naming = {
     # Azure CAF Naming Convention
-    workload = "learntf"
-    env      = "lab"
-    region   = "wus"
+    workload      = "learntf"
+    env           = "lab"
+    region        = "westus"
+    region_abbr   = "wus"
   }
 
   caf_tags = {
@@ -43,7 +44,7 @@ locals {
 # Docs:  https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
 # Manages an Azure Resource Group - a logical container for related Azure resources.
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-${local.caf_naming.workload}-${local.caf_naming.env}-${local.caf_naming.region}-001"
+  name     = "rg-${local.caf_naming.workload}-${local.caf_naming.env}-${local.caf_naming.region_abbr}-001"
   location = local.caf_naming.region
 
   tags = local.caf_tags
