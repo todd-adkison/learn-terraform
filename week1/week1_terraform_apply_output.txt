@@ -1,0 +1,17 @@
+tadkison@JH-fAPuC2ih4Jzn:/mnt/c/local/repos/learn-terraform/week1$ terraform apply "week1.tfplan"
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Creation complete after 2s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001]
+azurerm_storage_account.sa: Creating...
+azurerm_storage_account.sa: Still creating... [00m10s elapsed]
+azurerm_storage_account.sa: Still creating... [00m20s elapsed]
+azurerm_storage_account.sa: Creation complete after 23s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+resource_group_id = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001"
+resource_group_name = "rg-learntf-lab-wus-001"
+storage_account_id = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001"
+storage_account_name = "salearntflab001"
+tadkison@JH-fAPuC2ih4Jzn:/mnt/c/local/repos/learn-terraform/week1$
