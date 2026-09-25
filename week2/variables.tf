@@ -1,3 +1,13 @@
+variable "resource_tags" {
+  description = "Common tags to apply to all resources."
+  type        = map(string)
+  default = {
+    owner      = "infra"
+    managed_by = "terraform"
+    costcenter = "111-222-3333"
+  }
+}
+
 variable "prefix" {
   description = "Optional prefix list or string for the resource naming convention."
   type        = list(string)

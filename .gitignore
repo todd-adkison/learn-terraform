@@ -25,3 +25,6 @@ override.tf.json
 # CLI Config
 .terraformrc
 terraform.rc
+
+# Bash scripts
+create-backend-resources.sh

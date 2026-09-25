@@ -1,0 +1,43 @@
+tadkison@JH-fAPuC2ih4Jzn:/mnt/c/local/repos/learn-terraform/week2$ terraform apply "week2.tfplan"
+Acquiring state lock. This may take a few moments...
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg: Creation complete after 24s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001]
+azurerm_storage_account.sa: Creating...
+azurerm_storage_account.sa: Still creating... [00m10s elapsed]
+azurerm_storage_account.sa: Still creating... [00m20s elapsed]
+azurerm_storage_account.sa: Creation complete after 23s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001]
+azurerm_log_analytics_workspace.la: Creating...
+azurerm_log_analytics_workspace.la: Still creating... [00m10s elapsed]
+azurerm_log_analytics_workspace.la: Still creating... [00m20s elapsed]
+azurerm_log_analytics_workspace.la: Still creating... [00m30s elapsed]
+azurerm_log_analytics_workspace.la: Still creating... [00m40s elapsed]
+azurerm_log_analytics_workspace.la: Creation complete after 46s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.OperationalInsights/workspaces/lalearntflab001]
+azurerm_monitor_diagnostic_setting.diag["table"]: Creating...
+azurerm_monitor_diagnostic_setting.diag["queue"]: Creating...
+azurerm_monitor_diagnostic_setting.diag["file"]: Creating...
+azurerm_monitor_diagnostic_setting.diag["blob"]: Creating...
+azurerm_monitor_diagnostic_setting.diag["blob"]: Still creating... [00m10s elapsed]
+azurerm_monitor_diagnostic_setting.diag["table"]: Still creating... [00m10s elapsed]
+azurerm_monitor_diagnostic_setting.diag["file"]: Still creating... [00m10s elapsed]
+azurerm_monitor_diagnostic_setting.diag["queue"]: Still creating... [00m10s elapsed]
+azurerm_monitor_diagnostic_setting.diag["queue"]: Creation complete after 19s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001/queueServices/default|enable-all-logs-queue]
+azurerm_monitor_diagnostic_setting.diag["file"]: Still creating... [00m20s elapsed]
+azurerm_monitor_diagnostic_setting.diag["table"]: Still creating... [00m20s elapsed]
+azurerm_monitor_diagnostic_setting.diag["blob"]: Still creating... [00m20s elapsed]
+azurerm_monitor_diagnostic_setting.diag["blob"]: Creation complete after 20s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001/blobServices/default|enable-all-logs-blob]
+azurerm_monitor_diagnostic_setting.diag["table"]: Creation complete after 21s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001/tableServices/default|enable-all-logs-table]
+azurerm_monitor_diagnostic_setting.diag["file"]: Creation complete after 23s [id=/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001/fileServices/default|enable-all-logs-file]
+Releasing state lock. This may take a few moments...
+
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+log_analytics_workspace_id = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.OperationalInsights/workspaces/lalearntflab001"
+log_analytics_workspace_name = "lalearntflab001"
+resource_group_id = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001"
+resource_group_name = "rg-learntf-lab-wus-001"
+storage_account_id = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-learntf-lab-wus-001/providers/Microsoft.Storage/storageAccounts/salearntflab001"
+storage_account_name = "salearntflab001"

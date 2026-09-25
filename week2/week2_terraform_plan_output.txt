@@ -1,0 +1,280 @@
+tadkison@JH-fAPuC2ih4Jzn:/mnt/c/local/repos/learn-terraform/week2$ terraform plan -out week2.tfplan
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_log_analytics_workspace.la will be created
+  + resource "azurerm_log_analytics_workspace" "la" {
+      + allow_resource_only_permissions = true
+      + daily_quota_gb                  = -1
+      + id                              = (known after apply)
+      + internet_ingestion_access_type  = "Enabled"
+      + internet_query_access_type      = "Enabled"
+      + local_authentication_enabled    = true
+      + location                        = "westus"
+      + name                            = "lalearntflab001"
+      + primary_shared_key              = (sensitive value)
+      + resource_group_name             = "rg-learntf-lab-wus-001"
+      + retention_in_days               = 30
+      + secondary_shared_key            = (sensitive value)
+      + sku                             = "PerGB2018"
+      + tags                            = {
+          + "costcenter" = "111-222-3333"
+          + "managed_by" = "terraform"
+          + "owner"      = "infra"
+        }
+      + workspace_id                    = (known after apply)
+    }
+
+  # azurerm_monitor_diagnostic_setting.diag["blob"] will be created
+  + resource "azurerm_monitor_diagnostic_setting" "diag" {
+      + id                             = (known after apply)
+      + log_analytics_destination_type = (known after apply)
+      + log_analytics_workspace_id     = (known after apply)
+      + name                           = "enable-all-logs-blob"
+      + target_resource_id             = (known after apply)
+
+      + enabled_log {
+          + category       = "StorageDelete"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageRead"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageWrite"
+            # (1 unchanged attribute hidden)
+        }
+
+      + enabled_metric {
+          + category = "Transaction"
+        }
+    }
+
+  # azurerm_monitor_diagnostic_setting.diag["file"] will be created
+  + resource "azurerm_monitor_diagnostic_setting" "diag" {
+      + id                             = (known after apply)
+      + log_analytics_destination_type = (known after apply)
+      + log_analytics_workspace_id     = (known after apply)
+      + name                           = "enable-all-logs-file"
+      + target_resource_id             = (known after apply)
+
+      + enabled_log {
+          + category       = "StorageDelete"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageRead"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageWrite"
+            # (1 unchanged attribute hidden)
+        }
+
+      + enabled_metric {
+          + category = "Transaction"
+        }
+    }
+
+  # azurerm_monitor_diagnostic_setting.diag["queue"] will be created
+  + resource "azurerm_monitor_diagnostic_setting" "diag" {
+      + id                             = (known after apply)
+      + log_analytics_destination_type = (known after apply)
+      + log_analytics_workspace_id     = (known after apply)
+      + name                           = "enable-all-logs-queue"
+      + target_resource_id             = (known after apply)
+
+      + enabled_log {
+          + category       = "StorageDelete"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageRead"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageWrite"
+            # (1 unchanged attribute hidden)
+        }
+
+      + enabled_metric {
+          + category = "Transaction"
+        }
+    }
+
+  # azurerm_monitor_diagnostic_setting.diag["table"] will be created
+  + resource "azurerm_monitor_diagnostic_setting" "diag" {
+      + id                             = (known after apply)
+      + log_analytics_destination_type = (known after apply)
+      + log_analytics_workspace_id     = (known after apply)
+      + name                           = "enable-all-logs-table"
+      + target_resource_id             = (known after apply)
+
+      + enabled_log {
+          + category       = "StorageDelete"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageRead"
+            # (1 unchanged attribute hidden)
+        }
+      + enabled_log {
+          + category       = "StorageWrite"
+            # (1 unchanged attribute hidden)
+        }
+
+      + enabled_metric {
+          + category = "Transaction"
+        }
+    }
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "westus"
+      + name     = "rg-learntf-lab-wus-001"
+      + tags     = {
+          + "costcenter" = "111-222-3333"
+          + "managed_by" = "terraform"
+          + "owner"      = "infra"
+        }
+    }
+
+  # azurerm_storage_account.sa will be created
+  + resource "azurerm_storage_account" "sa" {
+      + access_tier                                    = (known after apply)
+      + account_kind                                   = "StorageV2"
+      + account_replication_type                       = "LRS"
+      + account_replication_type_migrating_to          = (known after apply)
+      + account_replication_type_migration_in_progress = (known after apply)
+      + account_tier                                   = "Standard"
+      + allow_nested_items_to_be_public                = false
+      + cross_tenant_replication_enabled               = false
+      + default_to_oauth_authentication                = false
+      + dns_endpoint_type                              = "Standard"
+      + https_traffic_only_enabled                     = true
+      + id                                             = (known after apply)
+      + infrastructure_encryption_enabled              = false
+      + is_hns_enabled                                 = false
+      + large_file_share_enabled                       = (known after apply)
+      + local_user_enabled                             = true
+      + location                                       = "westus"
+      + min_tls_version                                = "TLS1_2"
+      + name                                           = "salearntflab001"
+      + nfsv3_enabled                                  = false
+      + primary_access_key                             = (sensitive value)
+      + primary_blob_connection_string                 = (sensitive value)
+      + primary_blob_endpoint                          = (known after apply)
+      + primary_blob_host                              = (known after apply)
+      + primary_blob_internet_endpoint                 = (known after apply)
+      + primary_blob_internet_host                     = (known after apply)
+      + primary_blob_microsoft_endpoint                = (known after apply)
+      + primary_blob_microsoft_host                    = (known after apply)
+      + primary_connection_string                      = (sensitive value)
+      + primary_dfs_endpoint                           = (known after apply)
+      + primary_dfs_host                               = (known after apply)
+      + primary_dfs_internet_endpoint                  = (known after apply)
+      + primary_dfs_internet_host                      = (known after apply)
+      + primary_dfs_microsoft_endpoint                 = (known after apply)
+      + primary_dfs_microsoft_host                     = (known after apply)
+      + primary_file_endpoint                          = (known after apply)
+      + primary_file_host                              = (known after apply)
+      + primary_file_internet_endpoint                 = (known after apply)
+      + primary_file_internet_host                     = (known after apply)
+      + primary_file_microsoft_endpoint                = (known after apply)
+      + primary_file_microsoft_host                    = (known after apply)
+      + primary_location                               = (known after apply)
+      + primary_queue_endpoint                         = (known after apply)
+      + primary_queue_host                             = (known after apply)
+      + primary_queue_microsoft_endpoint               = (known after apply)
+      + primary_queue_microsoft_host                   = (known after apply)
+      + primary_table_endpoint                         = (known after apply)
+      + primary_table_host                             = (known after apply)
+      + primary_table_microsoft_endpoint               = (known after apply)
+      + primary_table_microsoft_host                   = (known after apply)
+      + primary_web_endpoint                           = (known after apply)
+      + primary_web_host                               = (known after apply)
+      + primary_web_internet_endpoint                  = (known after apply)
+      + primary_web_internet_host                      = (known after apply)
+      + primary_web_microsoft_endpoint                 = (known after apply)
+      + primary_web_microsoft_host                     = (known after apply)
+      + public_network_access                          = "Enabled"
+      + public_network_access_enabled                  = true
+      + queue_encryption_key_type                      = "Service"
+      + resource_group_name                            = "rg-learntf-lab-wus-001"
+      + secondary_access_key                           = (sensitive value)
+      + secondary_blob_connection_string               = (sensitive value)
+      + secondary_blob_endpoint                        = (known after apply)
+      + secondary_blob_host                            = (known after apply)
+      + secondary_blob_internet_endpoint               = (known after apply)
+      + secondary_blob_internet_host                   = (known after apply)
+      + secondary_blob_microsoft_endpoint              = (known after apply)
+      + secondary_blob_microsoft_host                  = (known after apply)
+      + secondary_connection_string                    = (sensitive value)
+      + secondary_dfs_endpoint                         = (known after apply)
+      + secondary_dfs_host                             = (known after apply)
+      + secondary_dfs_internet_endpoint                = (known after apply)
+      + secondary_dfs_internet_host                    = (known after apply)
+      + secondary_dfs_microsoft_endpoint               = (known after apply)
+      + secondary_dfs_microsoft_host                   = (known after apply)
+      + secondary_file_endpoint                        = (known after apply)
+      + secondary_file_host                            = (known after apply)
+      + secondary_file_internet_endpoint               = (known after apply)
+      + secondary_file_internet_host                   = (known after apply)
+      + secondary_file_microsoft_endpoint              = (known after apply)
+      + secondary_file_microsoft_host                  = (known after apply)
+      + secondary_location                             = (known after apply)
+      + secondary_queue_endpoint                       = (known after apply)
+      + secondary_queue_host                           = (known after apply)
+      + secondary_queue_microsoft_endpoint             = (known after apply)
+      + secondary_queue_microsoft_host                 = (known after apply)
+      + secondary_table_endpoint                       = (known after apply)
+      + secondary_table_host                           = (known after apply)
+      + secondary_table_microsoft_endpoint             = (known after apply)
+      + secondary_table_microsoft_host                 = (known after apply)
+      + secondary_web_endpoint                         = (known after apply)
+      + secondary_web_host                             = (known after apply)
+      + secondary_web_internet_endpoint                = (known after apply)
+      + secondary_web_internet_host                    = (known after apply)
+      + secondary_web_microsoft_endpoint               = (known after apply)
+      + secondary_web_microsoft_host                   = (known after apply)
+      + sftp_enabled                                   = false
+      + shared_access_key_enabled                      = true
+      + table_encryption_key_type                      = "Service"
+      + tags                                           = {
+          + "costcenter" = "111-222-3333"
+          + "managed_by" = "terraform"
+          + "owner"      = "infra"
+        }
+
+      + blob_properties (known after apply)
+
+      + network_rules (known after apply)
+
+      + routing (known after apply)
+
+      + share_properties (known after apply)
+    }
+
+Plan: 7 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + log_analytics_workspace_id   = (known after apply)
+  + log_analytics_workspace_name = "lalearntflab001"
+  + resource_group_id            = (known after apply)
+  + resource_group_name          = "rg-learntf-lab-wus-001"
+  + storage_account_id           = (known after apply)
+  + storage_account_name         = "salearntflab001"
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: week2.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "week2.tfplan"
