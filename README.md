@@ -13,13 +13,22 @@ learn-terraform/
 │   ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 3.0.2)
 │   ├── week1_terraform_plan_output.txt      # Captured `terraform plan` output
 │   └── week1_terraform_apply_output.txt     # Captured `terraform apply` output
-└── week2/
-    ├── main.tf                              # Provider + remote backend, resources, outputs
-    ├── variables.tf                         # Input variables (naming parts, region, tags)
+├── week2/
+│   ├── main.tf                              # Provider + remote backend, resources, outputs
+│   ├── variables.tf                         # Input variables (naming parts, region, tags)
+│   ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
+│   ├── week2_terraform_plan_output.txt      # Captured `terraform plan` output
+│   ├── week2_terraform_apply_output.txt     # Captured `terraform apply` output
+│   └── week2_terraform_destroy_output.txt   # Captured `terraform destroy` output
+└── week3/
+    ├── backend.tf                           # Remote azurerm backend (Azure AD auth)
+    ├── main.tf                              # Provider, resources, outputs
+    ├── variables.tf                         # Input variables (unchanged from week2)
     ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
-    ├── week2_terraform_plan_output.txt      # Captured `terraform plan` output
-    ├── week2_terraform_apply_output.txt     # Captured `terraform apply` output
-    └── week2_terraform_destroy_output.txt   # Captured `terraform destroy` output
+    ├── week3.tfplan_out.txt                 # Captured `terraform plan` output
+    ├── create_feature_branch.txt            # Git log: create feature branch
+    ├── pull_request.txt                     # Git log: commit and push feature branch
+    └── merge_branch_main.txt                # Git log: merge feature branch into main
 ```
 
 ## week1
@@ -88,3 +97,22 @@ State is stored in Azure Blob Storage:
 | Key | `<key>` |
 
 The backend storage account and container must already exist, and your `az login` identity needs access to them, before running `terraform init`.
+
+## week3
+
+Same resources, variables, and outputs as week2. The focus is code organization and a Git feature-branch workflow.
+
+### What changed from week2
+
+| Area | week2 | week3 |
+|------|-------|-------|
+| Backend location | Inside `terraform {}` in `main.tf` | Separate `backend.tf` file |
+| Backend auth | Storage account key (default) | Azure AD (`use_azuread_auth = true`) |
+
+### Git workflow
+
+Changes were made on a feature branch and merged to `main`, captured in the `.txt` logs:
+
+1. `create_feature_branch.txt`: `git pull origin main`, then `git checkout -b feature/backendConfiguration`
+2. `pull_request.txt`: commit and `git push -u origin feature/backendConfiguration`
+3. `merge_branch_main.txt`: `git checkout main`, `git merge feature/backendConfiguration`, `git push`

@@ -1,0 +1,29 @@
+PS C:\local\repos\learn-terraform> git pull origin main
+From https://github.com/todd-adkison/learn-terraform
+ * branch            main       -> FETCH_HEAD
+Current branch feature/backendConfiguration is up to date.
+PS C:\local\repos\learn-terraform> git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+PS C:\local\repos\learn-terraform> git merge feature/backendConfiguration
+Updating 859980b..331b712
+Fast-forward
+ week3/.terraform.lock.hcl       |  22 ++++++++
+ week3/backend.tf                |  11 ++++
+ week3/create_feature_branch.txt |  15 ++++++
+ week3/main.tf                   | 110 ++++++++++++++++++++++++++++++++++++++++
+ week3/variables.tf              |  45 ++++++++++++++++
+ week3/week3.tfplan_out.txt      | Bin 0 -> 28296 bytes
+ 6 files changed, 203 insertions(+)
+ create mode 100644 week3/.terraform.lock.hcl
+ create mode 100644 week3/backend.tf
+ create mode 100644 week3/create_feature_branch.txt
+ create mode 100644 week3/main.tf
+ create mode 100644 week3/variables.tf
+ create mode 100644 week3/week3.tfplan_out.txt
+PS C:\local\repos\learn-terraform> git push -u origin main
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/todd-adkison/learn-terraform.git
+   859980b..331b712  main -> main
+branch 'main' set up to track 'origin/main'.
+PS C:\local\repos\learn-terraform>
