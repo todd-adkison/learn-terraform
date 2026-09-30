@@ -1,0 +1,15 @@
+PS C:\local\repos\learn-terraform\week3> git checkout main
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+PS C:\local\repos\learn-terraform\week3> cd ..
+PS C:\local\repos\learn-terraform> cd .\week3\
+PS C:\local\repos\learn-terraform\week3> git pull origin main
+From https://github.com/todd-adkison/learn-terraform
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+PS C:\local\repos\learn-terraform\week3> git checkout -b feature/backendConfiguration
+Switched to a new branch 'feature/backendConfiguration'
+PS C:\local\repos\learn-terraform\week3> git branch
+* feature/backendConfiguration
+  main
+PS C:\local\repos\learn-terraform\week3>
