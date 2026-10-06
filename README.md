@@ -20,15 +20,21 @@ learn-terraform/
 │   ├── week2_terraform_plan_output.txt      # Captured `terraform plan` output
 │   ├── week2_terraform_apply_output.txt     # Captured `terraform apply` output
 │   └── week2_terraform_destroy_output.txt   # Captured `terraform destroy` output
-└── week3/
-    ├── backend.tf                           # Remote azurerm backend (Azure AD auth)
-    ├── main.tf                              # Provider, resources, outputs
-    ├── variables.tf                         # Input variables (unchanged from week2)
+├── week3/
+│   ├── backend.tf                           # Remote azurerm backend (Azure AD auth)
+│   ├── main.tf                              # Provider, resources, outputs
+│   ├── variables.tf                         # Input variables (unchanged from week2)
+│   ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
+│   ├── week3.tfplan_out.txt                 # Captured `terraform plan` output
+│   ├── create_feature_branch.txt            # Git log: create feature branch
+│   ├── pull_request.txt                     # Git log: commit and push feature branch
+│   └── merge_branch_main.txt                # Git log: merge feature branch into main
+└── week4/
+    ├── backend.tf                           # Remote azurerm backend (unchanged from week3)
+    ├── main.tf                              # Provider, resource group, NSG, virtual network, outputs
+    ├── variables.tf                         # Input variables (unchanged from week3)
     ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
-    ├── week3.tfplan_out.txt                 # Captured `terraform plan` output
-    ├── create_feature_branch.txt            # Git log: create feature branch
-    ├── pull_request.txt                     # Git log: commit and push feature branch
-    └── merge_branch_main.txt                # Git log: merge feature branch into main
+    └── week4_tfplan.txt                     # Captured `terraform plan` output
 ```
 
 ## week1
@@ -116,3 +122,25 @@ Changes were made on a feature branch and merged to `main`, captured in the `.tx
 1. `create_feature_branch.txt`: `git pull origin main`, then `git checkout -b feature/backendConfiguration`
 2. `pull_request.txt`: commit and `git push -u origin feature/backendConfiguration`
 3. `merge_branch_main.txt`: `git checkout main`, `git merge feature/backendConfiguration`, `git push`
+
+## week4
+
+Replaces the storage and monitoring resources with networking. Backend, variables, and provider version are unchanged from week3.
+
+### What changed from week3
+
+| Area | week3 | week4 |
+|------|-------|-------|
+| Resources | Resource group, storage account, Log Analytics workspace, diagnostic settings | Resource group, network security group, virtual network with 2 subnets |
+| Outputs | RG, storage account, Log Analytics name/ID | RG, virtual network name/ID |
+
+### Resources
+
+- `azurerm_resource_group.rg`: `rg-<workload>-<environment>-<location>-001`
+- `azurerm_network_security_group.nsg`: `nsg-<workload>-<environment>-<location>-001`, no custom rules
+- `azurerm_virtual_network.vnet`: `vnet-<workload>-<environment>-<location>-001`, address space `10.0.0.0/16`, with inline subnets:
+
+| Subnet | Address prefix | NSG |
+|--------|----------------|-----|
+| `snet-<workload>-001` | `10.0.1.0/24` | `nsg` attached |
+| `snet-<workload>-002` | `10.0.2.0/24` | none |
