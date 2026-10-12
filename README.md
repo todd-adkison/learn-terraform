@@ -29,12 +29,18 @@ learn-terraform/
 │   ├── create_feature_branch.txt            # Git log: create feature branch
 │   ├── pull_request.txt                     # Git log: commit and push feature branch
 │   └── merge_branch_main.txt                # Git log: merge feature branch into main
-└── week4/
-    ├── backend.tf                           # Remote azurerm backend (unchanged from week3)
-    ├── main.tf                              # Provider, resource group, NSG, virtual network, outputs
-    ├── variables.tf                         # Input variables (unchanged from week3)
+├── week4/
+│   ├── backend.tf                           # Remote azurerm backend (unchanged from week3)
+│   ├── main.tf                              # Provider, resource group, NSG, virtual network, outputs
+│   ├── variables.tf                         # Input variables (unchanged from week3)
+│   ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
+│   └── week4_tfplan.txt                     # Captured `terraform plan` output
+└── week5/
+    ├── backend.tf                           # Remote azurerm backend (unchanged from week4)
+    ├── main.tf                              # Provider, resource group, managed identity, Key Vault, role assignment, outputs
+    ├── variables.tf                         # Input variables (region changed to Central US)
     ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
-    └── week4_tfplan.txt                     # Captured `terraform plan` output
+    └── week5_tfplan.txt                     # Captured `terraform plan` output
 ```
 
 ## week1
@@ -144,3 +150,24 @@ Replaces the storage and monitoring resources with networking. Backend, variable
 |--------|----------------|-----|
 | `snet-<workload>-001` | `10.0.1.0/24` | `nsg` attached |
 | `snet-<workload>-002` | `10.0.2.0/24` | none |
+
+## week5
+
+Replaces the networking resources with identity and secrets management. Backend and provider version are unchanged from week4.
+
+### What changed from week4
+
+| Area | week4 | week5 |
+|------|-------|-------|
+| Region | West US (`westus` / `wus`) | Central US (`centralus` / `cus`) |
+| Provider `features` | Empty | `key_vault` settings: purge soft-deleted vaults on destroy, recover soft-deleted vaults on create |
+| Resources | Resource group, NSG, virtual network | Resource group, user-assigned managed identity, Key Vault, role assignment |
+| Data sources | None | `azurerm_client_config.current` (supplies the tenant ID) |
+| Outputs | RG, virtual network name/ID | RG, Key Vault name/ID |
+
+### Resources
+
+- `azurerm_resource_group.rg`: `rg-<workload>-<environment>-<location>-001`
+- `azurerm_user_assigned_identity.mi`: `mi-<workload>-001`
+- `azurerm_key_vault.kv`: `kv<workload>-<environment>-<location>-001`, Standard SKU, Azure RBAC authorization, 7-day soft-delete retention
+- `azurerm_role_assignment.kv_role`: grants the managed identity **Key Vault Secrets User** on the Key Vault
