@@ -35,12 +35,21 @@ learn-terraform/
 │   ├── variables.tf                         # Input variables (unchanged from week3)
 │   ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
 │   └── week4_tfplan.txt                     # Captured `terraform plan` output
-└── week5/
-    ├── backend.tf                           # Remote azurerm backend (unchanged from week4)
-    ├── main.tf                              # Provider, resource group, managed identity, Key Vault, role assignment, outputs
-    ├── variables.tf                         # Input variables (region changed to Central US)
-    ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
-    └── week5_tfplan.txt                     # Captured `terraform plan` output
+├── week5/
+│   ├── backend.tf                           # Remote azurerm backend (unchanged from week4)
+│   ├── main.tf                              # Provider, resource group, managed identity, Key Vault, role assignment, outputs
+│   ├── variables.tf                         # Input variables (region changed to Central US)
+│   ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
+│   └── week5_tfplan.txt                     # Captured `terraform plan` output
+└── week6/
+    ├── backend.tf                           # Remote azurerm backend (unchanged from week5)
+    ├── providers.tf                         # Terraform/provider versions (azapi, azurerm, random) and azurerm provider
+    ├── main.tf                              # Resource group, networking, storage account, Linux VM
+    ├── ssh.tf                               # SSH key pair generated with azapi, `key_data` output
+    ├── outputs.tf                           # Resource group name, VM public IP
+    ├── variables.tf                         # Input variables (location, RG name prefix, VM username)
+    ├── .terraform.lock.hcl                  # Provider dependency lock file (azapi 1.15.0, azurerm 3.117.1, random 3.9.1)
+    └── week6_tfplan.txt                     # Captured `terraform plan` output
 ```
 
 ## week1
@@ -171,3 +180,42 @@ Replaces the networking resources with identity and secrets management. Backend 
 - `azurerm_user_assigned_identity.mi`: `mi-<workload>-001`
 - `azurerm_key_vault.kv`: `kv<workload>-<environment>-<location>-001`, Standard SKU, Azure RBAC authorization, 7-day soft-delete retention
 - `azurerm_role_assignment.kv_role`: grants the managed identity **Key Vault Secrets User** on the Key Vault
+
+## week6
+
+Deploys an Ubuntu Linux virtual machine reachable over SSH. The code is split across purpose-specific files and uses random names instead of the CAF naming variables from earlier weeks.
+
+### What changed from week5
+
+| Area | week5 | week6 |
+|------|-------|-------|
+| File layout | `backend.tf`, `main.tf`, `variables.tf` | Adds `providers.tf`, `ssh.tf`, `outputs.tf` |
+| Providers | `azurerm` `5.7.0` | `azurerm` `~>3.0` (3.117.1), `azapi` `~>1.5` (1.15.0), `random` `~>3.0` (3.9.1) |
+| Terraform CLI constraint | None declared | `>=0.12` |
+| Region | Central US | East US (`eastus`) |
+| Naming | CAF variables (`workload`, `environment`, `location`) | `random_pet` / `random_id` generated names, fixed `my*` names |
+| Tags | `var.resource_tags` | None |
+| Resources | Resource group, managed identity, Key Vault, role assignment | Resource group, networking, storage account, Linux VM, SSH key |
+| Outputs | RG, Key Vault name/ID | RG name, VM public IP, SSH public key |
+
+### Resources
+
+- `random_pet.rg_name` / `azurerm_resource_group.rg`: `<prefix>-<random-pet>` (for example `rg-cheerful-yak`)
+- `azurerm_virtual_network.my_terraform_network`: `myVnet`, `10.0.0.0/16`
+- `azurerm_subnet.my_terraform_subnet`: `mySubnet`, `10.0.1.0/24`
+- `azurerm_public_ip.my_terraform_public_ip`: `myPublicIP`, Static, Standard SKU
+- `azurerm_network_security_group.my_terraform_nsg`: `myNetworkSecurityGroup`, one inbound rule allowing TCP 22 (SSH) from any source
+- `azurerm_network_interface.my_terraform_nic`: `myNIC`, dynamic private IP plus the public IP
+- `azurerm_network_interface_security_group_association.example`: attaches the NSG to the NIC
+- `random_id.random_id` / `azurerm_storage_account.my_storage_account`: `diag<random hex>`, Standard LRS, for boot diagnostics
+- `azurerm_linux_virtual_machine.my_terraform_vm`: `myVM`, `Standard_DS1_v2`, Ubuntu 22.04 LTS Gen2, Premium LRS OS disk, SSH key login only
+- `random_pet.ssh_key_name` / `azapi_resource.ssh_public_key`: Azure SSH public key resource (`ssh<random-pet>`)
+- `azapi_resource_action.ssh_public_key_gen`: calls `generateKeyPair` and exports the public and private keys
+
+### Variables
+
+| Variable | Type | Default | Description |
+|----------|------|---------|-------------|
+| `resource_group_location` | `string` | `eastus` | Azure region |
+| `resource_group_name_prefix` | `string` | `rg` | Prefix combined with a random pet name |
+| `username` | `string` | `azureadmin` | VM admin username |

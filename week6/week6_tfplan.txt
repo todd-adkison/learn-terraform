@@ -1,0 +1,163 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # azapi_resource.ssh_public_key will be updated in-place
+  ~ resource "azapi_resource" "ssh_public_key" {
+        id                        = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-cheerful-yak/providers/Microsoft.Compute/sshPublicKeys/sshsetmutt"
+        name                      = "sshsetmutt"
+      ~ output                    = jsonencode({}) -> (known after apply)
+      - tags                      = {
+          - "CostCenter" = "CC-FIRST"
+        } -> null
+        # (8 unchanged attributes hidden)
+    }
+
+  # azurerm_linux_virtual_machine.my_terraform_vm will be created
+  + resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
+      + admin_username                                         = "azureadmin"
+      + allow_extension_operations                             = true
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = "hostname"
+      + disable_password_authentication                        = true
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "eastus"
+      + max_bid_price                                          = -1
+      + name                                                   = "myVM"
+      + network_interface_ids                                  = (known after apply)
+      + patch_assessment_mode                                  = "ImageDefault"
+      + patch_mode                                             = "ImageDefault"
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = true
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg-cheerful-yak"
+      + size                                                   = "Standard_DS1_v2"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = false
+
+      + admin_ssh_key {
+          + public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCoW5RBmd/8fnHPWS94KED8u7R9lUVzPd2HWa6xcZpqROCx80ZcebX28G9Vaux+prCLW1tg/RI8LycShLlzxyHWl7azCUPBkICyTjA+18UMSFLpygp4EBzdUoz33SLwkdfgD1FY2/UcuGLUt3JEFD7szToX9uXEjXRNfhEfcuz1VEuzsp9oxwca5B0/Sdw28SGBEiprHUD5dDsP7NTTwqq6L0Jccb2ZPPg9ChfajMn6JLROhGypcGXCRGhKCCwd7lnr266BNBzJ+SS/DR0ow1mPq0/O/6m/AHaOy0qmu8pUo3o4pWHhm9WEjGSFkgn9gfUrDspBuznkBJZHrmGQP9RjTTavGwb9MG6uRN4evFTQd6vWX6+8HdQ92QoKDlMGgEE1DP4VSOaguGQiTuo1tczkvo4hxrazwFch+mJ5v0DSMAzxaSHP6QVKTAOe1pT9vfAd4iyrGg2m9mLkRPDw1oYvEL48y3Ksx+5p6Tkb6E57xlE4jNlKCcz8CGn1AWvV9HE= generated-by-azure"
+          + username   = "azureadmin"
+        }
+
+      + boot_diagnostics {
+          + storage_account_uri = "https://diag6294388ff13a273a.blob.core.windows.net/"
+        }
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + name                      = "myOsDisk"
+          + storage_account_type      = "Premium_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-lts-gen2"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.my_terraform_nic will be created
+  + resource "azurerm_network_interface" "my_terraform_nic" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "myNIC"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg-cheerful-yak"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "my_nic_configuration"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-cheerful-yak/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet"
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.example will be created
+  + resource "azurerm_network_interface_security_group_association" "example" {
+      + id                        = (known after apply)
+      + network_interface_id      = (known after apply)
+      + network_security_group_id = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-cheerful-yak/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"
+    }
+
+  # azurerm_network_security_group.my_terraform_nsg will be updated in-place
+  ~ resource "azurerm_network_security_group" "my_terraform_nsg" {
+        id                  = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-cheerful-yak/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"
+        name                = "myNetworkSecurityGroup"
+      ~ tags                = {
+          - "CostCenter" = "CC-FIRST" -> null
+        }
+        # (3 unchanged attributes hidden)
+    }
+
+  # azurerm_public_ip.my_terraform_public_ip will be created
+  + resource "azurerm_public_ip" "my_terraform_public_ip" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "eastus"
+      + name                    = "myPublicIP"
+      + resource_group_name     = "rg-cheerful-yak"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+    }
+
+  # azurerm_storage_account.my_storage_account will be updated in-place
+  ~ resource "azurerm_storage_account" "my_storage_account" {
+        id                                 = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-cheerful-yak/providers/Microsoft.Storage/storageAccounts/diag6294388ff13a273a"
+        name                               = "diag6294388ff13a273a"
+      ~ tags                               = {
+          - "CostCenter" = "CC-FIRST" -> null
+        }
+        # (97 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+  # azurerm_virtual_network.my_terraform_network will be updated in-place
+  ~ resource "azurerm_virtual_network" "my_terraform_network" {
+        id                      = "/subscriptions/dd8709d6-494b-401f-b722-023c57caccd1/resourceGroups/rg-cheerful-yak/providers/Microsoft.Network/virtualNetworks/myVnet"
+        name                    = "myVnet"
+      ~ tags                    = {
+          - "CostCenter" = "CC-FIRST" -> null
+        }
+        # (9 unchanged attributes hidden)
+    }
+
+Plan: 4 to add, 4 to change, 0 to destroy.
+
+Changes to Outputs:
+  + public_ip_address   = (known after apply)
