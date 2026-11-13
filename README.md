@@ -41,15 +41,32 @@ learn-terraform/
 │   ├── variables.tf                         # Input variables (region changed to Central US)
 │   ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 5.7.0)
 │   └── week5_tfplan.txt                     # Captured `terraform plan` output
-└── week6/
-    ├── backend.tf                           # Remote azurerm backend (unchanged from week5)
-    ├── providers.tf                         # Terraform/provider versions (azapi, azurerm, random) and azurerm provider
-    ├── main.tf                              # Resource group, networking, storage account, Linux VM
-    ├── ssh.tf                               # SSH key pair generated with azapi, `key_data` output
-    ├── outputs.tf                           # Resource group name, VM public IP
-    ├── variables.tf                         # Input variables (location, RG name prefix, VM username)
-    ├── .terraform.lock.hcl                  # Provider dependency lock file (azapi 1.15.0, azurerm 3.117.1, random 3.9.1)
-    └── week6_tfplan.txt                     # Captured `terraform plan` output
+├── week6/
+│   ├── backend.tf                           # Remote azurerm backend (unchanged from week5)
+│   ├── providers.tf                         # Terraform/provider versions (azapi, azurerm, random) and azurerm provider
+│   ├── main.tf                              # Resource group, networking, storage account, Linux VM
+│   ├── ssh.tf                               # SSH key pair generated with azapi, `key_data` output
+│   ├── outputs.tf                           # Resource group name, VM public IP
+│   ├── variables.tf                         # Input variables (location, RG name prefix, VM username)
+│   ├── .terraform.lock.hcl                  # Provider dependency lock file (azapi 1.15.0, azurerm 3.117.1, random 3.9.1)
+│   └── week6_tfplan.txt                     # Captured `terraform plan` output
+└── week7/
+    ├── providers.tf                         # Terraform/provider versions (azurerm ~> 4.0) and azurerm provider
+    ├── main.tf                              # Common tags, calls the resource-group and storage-account modules
+    ├── variables.tf                         # Input variables (subscription, location, environment, tags, storage suffix)
+    ├── outputs.tf                           # Resource group name, storage account name, blob endpoint
+    ├── .terraform.lock.hcl                  # Provider dependency lock file (azurerm 4.81.0)
+    └── modules/
+        ├── resource-group/
+        │   ├── main.tf                      # azurerm_resource_group
+        │   ├── variables.tf                 # name, location, tags
+        │   ├── outputs.tf                   # name, location, id
+        │   └── versions.tf                  # azurerm ~> 4.0
+        └── storage-account/
+            ├── main.tf                      # azurerm_storage_account with secure defaults
+            ├── variables.tf                 # name (validated), resource group, location, tier, replication, tags
+            ├── outputs.tf                   # id, name, primary_blob_endpoint
+            └── versions.tf                  # azurerm >= 4.0
 ```
 
 ## week1
@@ -219,3 +236,47 @@ Deploys an Ubuntu Linux virtual machine reachable over SSH. The code is split ac
 | `resource_group_location` | `string` | `eastus` | Azure region |
 | `resource_group_name_prefix` | `string` | `rg` | Prefix combined with a random pet name |
 | `username` | `string` | `azureadmin` | VM admin username |
+
+## week7
+
+Introduces reusable local modules. The root module calls a `resource-group` module and a `storage-account` module instead of declaring resources directly.
+
+### What changed from week6
+
+| Area | week6 | week7 |
+|------|-------|-------|
+| Structure | All resources in the root module | Root module calls local modules in `modules/` |
+| Providers | `azurerm` `~>3.0`, `azapi`, `random` | `azurerm` `~> 4.0` (4.81.0) only |
+| Terraform CLI constraint | `>=0.12` | `>= 1.6.0` |
+| State storage | Remote `azurerm` backend | Local (no `backend.tf`) |
+| Subscription | From `az login` context | Set explicitly with `var.subscription_id` |
+| Region | East US (`eastus`) | East US 2 (`eastus2`) |
+| Naming | Random pet / random ID names | `rg-data-<environment>`, `st<environment><storage_suffix>` |
+| Tags | None | `local.common_tags`: `var.tags` merged with `environment` and `managed_by` |
+| Resources | VM, networking, storage, SSH key | Resource group, storage account |
+| Outputs | RG name, VM public IP, SSH public key | RG name, storage account name, blob endpoint |
+
+### Modules
+
+**`resource-group`**: creates `azurerm_resource_group.this`. Outputs `name`, `location`, `id`.
+
+**`storage-account`**: creates `azurerm_storage_account.this` (`StorageV2`, Standard LRS by default) with built-in secure defaults:
+
+- Minimum TLS 1.2
+- HTTPS-only traffic
+- Public access to blobs and containers disabled
+- Name validated as 3–24 lowercase letters and numbers
+
+Outputs `id`, `name`, `primary_blob_endpoint`.
+
+### Variables
+
+| Variable | Type | Default | Description |
+|----------|------|---------|-------------|
+| `subscription_id` | `string` | Set in `variables.tf` | Target Azure subscription |
+| `location` | `string` | `eastus2` | Azure region |
+| `environment` | `string` | `dev` | Environment name, used in names and tags |
+| `tags` | `map(string)` | `{}` | Extra tags merged into the common tags |
+| `storage_suffix` | `string` | none (required) | Short unique suffix for the storage account name |
+
+`storage_suffix` has no default, so set it in a local `terraform.tfvars` file (ignored by git) or with `-var`.
